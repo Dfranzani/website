@@ -1,7 +1,9 @@
 *
 !.gitignore
 !/README.md
-!LICENSE
+!/LICENSE.md
 !docs/
 !docs/**
 
+
+/.quarto/
