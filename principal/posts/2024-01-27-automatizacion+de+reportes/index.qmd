@@ -1,0 +1,11 @@
+---
+title: "Automatización de reportes con R Markdown y R Sweave"
+date: '2024-01-27'
+categories:
+  - R Markdown
+  - R Sweave
+lang: es
+draft: true
+---
+
+
