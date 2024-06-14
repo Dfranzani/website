@@ -1,0 +1,85 @@
+---
+title: "Elaborar paquetes en R utilizando *devtools*"
+date: '2024-02-08'
+categories:
+  - devtools
+  - usethis
+  - roxygen
+  - sinew
+lang: es
+draft: false
+number-sections: true
+---
+
+A continuación, se mencionan los principales aspectos que personalmente considero necesarios para la elaboración de un paquete con R, los cuales, están tomados del libro [Paquetes R (2e)](https://r-pkgs.org/whole-game.html) escrito por Hadley Wickham y Jennifer Bryan. En particular, se presenta un resumen del primer capítulo "The Whole Game" (se recomienda replicar el ejemplo desarrollado en este capítulo) y algunas otras secciones.
+
+# Ruta de trabajo
+
+La creación de paquetes en R está asistida por diversos paquetes que facilitan el desarrollo, entre los cuales usaremos *devtools*, *usethis*, *roxygen2* y *sinew*, por lo que se requiere la instalación de estos.
+##  Estructura
+
+1. Para crear un paquete, lo primero es crear un proyecto. Seleccione File -> New Project -> New Directory -> R Package using devtools, o utilice el comando `create.package("~/dir/nombre_del_paquete")`. Esto creará un proyecto con los archivos:
+
+   - **.Rbuildignore**: archivos que no se deben incluir en la creación del paquete. No necesita manipular este archivo.
+   - **.gitignore**: control de archivos en Git. No necesita manipular este archivo (por el momento).
+   - **DESCRIPTION**: Contiene los metadatos del paquete (información del paquete). Puede editar el archivo para modificar los antecedentes, sin embargo, otro tipo de información será añadida/modificada directamente mediante otros comandos que se mencionarán más adelante.
+   - **NAMESPACE**: contiene los nombres de las funciones que el paquete utiliza y exporta (las que se crean). No se necesita manipular este archivo, ya que hay comando que se encargan de la modificación de este.
+   - **.Rproj**: archivo del directorio de trabajo. No necesita manipular este archivo.
+   
+   y la carpeta **R**, la cual, contiene todos los archivos **.R** con las funciones creadas.
+
+ 2. Los archivos .R pueden ser creados manualmente desde la barra de herramientas, aunque también es posible utilizar el comando `use_r("nombre_del_archivo")` del paquete *usethis*.
+ 
+ 3. Para incorporar un licencia de uso a su paquete (en caso de que lo crea relevante) utilice el comando `use_mit_license()` del paquete *usethis*. Hay otros tipos de licencias que son proporcionadas por este paquete (consulte [aquí](https://usethis.r-lib.org/reference/licenses.html)).
+ 
+ 4. Para crear un archivo "Leáme" utilice el comando `use_readme_md()` del paquete *usethis*, lo cual, creará una archivo **README.md**. Este archivo se utiliza para hacer una presentación del paquete.
+ 
+ 5. Para crear un archivo de las actualizaciones del paquete utilice el comando `use_news_ms()` del paquete *usethis*, lo cual, creará una archivo **NEWS.md**. Este archivo se utiliza para informar de las actualizaciones que va teniendo el paquete; normalmente, cada actualización importante se identifica como una nueva versión del paquete.
+ 
+## Añadir bases de datos
+
+Para almacenar bases de datos que se utilizan el paquete, ya sea para uso de ejemplos o para los ejercicios que el usuario estime conveniente, lo primero es cargar la base de datos y utilizar el comando `use_data("nombre de la base de datos en R")` del paquete *usethis*, esto creará la carpeta **data/** y guardará la base de datos con formato **.rda** (este proceso automáticamente crea la opción **LazyData: true** en el archivo **DESCRIPTION**). 
+
+Por otro lado, si se desea guardar base de datos o cualquier otro elemento que no se desea añadir al paquete, se puede utilizar el comando `use_data_raw()`del paquete *usethis*, lo cual, creará la carpeta **data-raw/**, que si bien es para guardar datos que no se añade al paquete, podemos usarla también para añadir archivos con código.
+
+## Documentación
+
+### Funciones
+
+Para añadir documentación de las funciones se utiliza el paquete *roxygen2*. Debe ubicarse dentro de la función, luego se utiliza la opción "Insert Roxygen Skeleton" ubicada en el engranaje que está en la barra de herramientas del archivo de código. Luego, ejecutando el comando `document()` se genera la documentación en formato **.Rd** en la carpeta **man/**. Esta carpeta se creará en caso de que no exista previamente.
+
+### Renombrar funciones
+
+Si se desea cambiar el nombre de una función podemos realizarlo con el comando `rename_files("nombre antiguo", "nombre nuevo")`, esto cambiará el nombre del archivo *test* asociado a la función. Luego, es necesario que se ejecute nuevamente el comando `document()` para actualizar la viñeta de documentación y el NAMESPACE.
+
+### Bases de datos
+
+Es necesario documentar las bases de datos que se encuentran en la carpeta **data/**, para ello se recomienda crear el archivo **R/data.R**. Luego, mediante el paquete y comando `sinew::makeOxygen("nombre de la base", add_fields = "source")` se imprime en consola el esqueleto de la documentación de la base de datos en formato **roxygen2**. En necesario que la base de datos se encuentre previamente cargada en el ambiente. 
+
+No olvide ejecutar el comando `document()` para crear la viñeta correspondiente.
+
+## Funcionamiento
+
+Para probar las funciones sin instalar el paquete se debe utilizar la función `load_all()`.
+La función `check()` verifica todos los procesos.
+
+# Otros aspectos
+
+## Pruebas
+
+El comando `use_testthat()` genera las funciones de prueba para verificar el funcionamiento del paquete, creando la carpeta **test/testthat/archivo_a_modificar**. 
+
+Las funciones se deben editar manualmente.
+
+## Logo
+
+Para crear un logo del paquete se debe utilizar el paquete *hexsticker*, el cual se puede complementar con los paquetes *magick* (para gráficos) y *sysfonts* (para fuentes)
+
+El logo combiene guardarlo en la carpeta **data-raw/**. Luego, para incrustar el logo en el paquete se debe utilizar el comando `use_logo("ruta_donde_está_guardado_el_logo)`. Este comando colocará el logo en la carpeta **man/figures/** y proporcionará un fragmento de código para incrustar el logo en archivo README (debe pegar este código en archivo README).
+
+
+# Problemas/Soluciones
+
+## Ubuntu (22.04.3 LTS)
+
+- Caracteres ASCII: es posible recibir la nota de que algunas de las bases de datos (de la carpeta data) no tienen únicamente caracteres ASCII, lo cual, viene acompañado de un mensaje en el que se indica que el paquete **qpdf** es necesario para reducir el tamaño de los PDF. Para solucionar este problema ejecute `sudo apt install qpdf`.

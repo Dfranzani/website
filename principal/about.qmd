@@ -1,0 +1,23 @@
+---
+toc: false
+lang: es
+---
+
+Mi nombre es Daniel Franzani. Puedes saber más sobre mi experiencia profesional y formación en la página de [inicio](https://dfranzani.github.io/website/principal/home.html). Este blog trata sobre el uso de R en estadística, redes neuronales poco profundas, librerías, entre otros temas. La idea es que los temas expuestos sean de ayuda a estudiantes en diversos niveles, por lo mismo, siéntase libre de dejar sus comentarios en cada uno de las publicaciones (al final de cada una puede encontrar el apartado correspondiente, cabe mencionar, que es necesario iniciar sesión en Github) o revisar directamente el [repositorio de comentarios generales](https://github.com/Dfranzani/website/discussions).
+
+## El sitio web
+
+Este sitio está creado con [Quarto](https://quarto.org/), se utilizó la plantilla de sitio web, y dentro de ella se incrustó un [blog](https://quarto.org/docs/websites/website-blog.html). En este último, las publicaciones están ordenadas por fecha de manera descendente. Las casillas de comentario en cada publicación están gestionadas mediante [**utterances**](https://utteranc.es/).
+
+
+## Trabajos
+
+Algunos de los proyectos en los que he trabajado últimamente son:
+
+- Elaboración de un modelo de alerta para el delito de portonazos (robo de auto en la entrada de un domicilio), mediante [YOLOv5](https://github.com/ultralytics/yolov5) y heurísticas de clasificación.
+
+- [Aplicación web](https://dfranzani.shinyapps.io/EjemploShinyDashboard/) para socialización de un modelo lineal generalizado enfocado en la predicción de deserción estudiantil. La aplicación esta construida con R Shiny.
+
+- [**MtrGLM**](https://github.com/Dfranzani/MtrGLM): Esta librería R (pública) está diseñada para obtener las métricas básicas de un Modelo Lineal Generalizado con variable respuesta dicotómica, las cuales están relacionadas con la matriz de confusión. Además, incluye gráficos asociados a la curvas de ROC, KS, Ganancia y PR.
+
+- **Tablyzer**: Esta librería R (privada, en desarrollo) está orientada a mejorar el proceso de cruce de bases de datos. La finalidad es poder reportar al usuario las inconsistencias presentes en el cruce de bases de datos.
