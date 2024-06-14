@@ -16,6 +16,7 @@ A continuación, se mencionan los principales aspectos que personalmente conside
 # Ruta de trabajo
 
 La creación de paquetes en R está asistida por diversos paquetes que facilitan el desarrollo, entre los cuales usaremos *devtools*, *usethis*, *roxygen2* y *sinew*, por lo que se requiere la instalación de estos.
+
 ##  Estructura
 
 1. Para crear un paquete, lo primero es crear un proyecto. Seleccione File -> New Project -> New Directory -> R Package using devtools, o utilice el comando `create.package("~/dir/nombre_del_paquete")`. Esto creará un proyecto con los archivos:

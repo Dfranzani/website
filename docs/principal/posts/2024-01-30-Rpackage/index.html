@@ -124,14 +124,15 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#ruta-de-trabajo" id="toc-ruta-de-trabajo" class="nav-link active" data-scroll-target="#ruta-de-trabajo"><span class="header-section-number">1</span> Ruta de trabajo</a>
   <ul class="collapse">
-  <li><a href="#añadir-bases-de-datos" id="toc-añadir-bases-de-datos" class="nav-link" data-scroll-target="#añadir-bases-de-datos"><span class="header-section-number">1.1</span> Añadir bases de datos</a></li>
-  <li><a href="#documentación" id="toc-documentación" class="nav-link" data-scroll-target="#documentación"><span class="header-section-number">1.2</span> Documentación</a>
+  <li><a href="#estructura" id="toc-estructura" class="nav-link" data-scroll-target="#estructura"><span class="header-section-number">1.1</span> Estructura</a></li>
+  <li><a href="#añadir-bases-de-datos" id="toc-añadir-bases-de-datos" class="nav-link" data-scroll-target="#añadir-bases-de-datos"><span class="header-section-number">1.2</span> Añadir bases de datos</a></li>
+  <li><a href="#documentación" id="toc-documentación" class="nav-link" data-scroll-target="#documentación"><span class="header-section-number">1.3</span> Documentación</a>
   <ul class="collapse">
-  <li><a href="#funciones" id="toc-funciones" class="nav-link" data-scroll-target="#funciones"><span class="header-section-number">1.2.1</span> Funciones</a></li>
-  <li><a href="#renombrar-funciones" id="toc-renombrar-funciones" class="nav-link" data-scroll-target="#renombrar-funciones"><span class="header-section-number">1.2.2</span> Renombrar funciones</a></li>
-  <li><a href="#bases-de-datos" id="toc-bases-de-datos" class="nav-link" data-scroll-target="#bases-de-datos"><span class="header-section-number">1.2.3</span> Bases de datos</a></li>
+  <li><a href="#funciones" id="toc-funciones" class="nav-link" data-scroll-target="#funciones"><span class="header-section-number">1.3.1</span> Funciones</a></li>
+  <li><a href="#renombrar-funciones" id="toc-renombrar-funciones" class="nav-link" data-scroll-target="#renombrar-funciones"><span class="header-section-number">1.3.2</span> Renombrar funciones</a></li>
+  <li><a href="#bases-de-datos" id="toc-bases-de-datos" class="nav-link" data-scroll-target="#bases-de-datos"><span class="header-section-number">1.3.3</span> Bases de datos</a></li>
   </ul></li>
-  <li><a href="#funcionamiento" id="toc-funcionamiento" class="nav-link" data-scroll-target="#funcionamiento"><span class="header-section-number">1.3</span> Funcionamiento</a></li>
+  <li><a href="#funcionamiento" id="toc-funcionamiento" class="nav-link" data-scroll-target="#funcionamiento"><span class="header-section-number">1.4</span> Funcionamiento</a></li>
   </ul></li>
   <li><a href="#otros-aspectos" id="toc-otros-aspectos" class="nav-link" data-scroll-target="#otros-aspectos"><span class="header-section-number">2</span> Otros aspectos</a>
   <ul class="collapse">
@@ -182,7 +183,9 @@ ul.task-list li input[type="checkbox"] {
 <p>A continuación, se mencionan los principales aspectos que personalmente considero necesarios para la elaboración de un paquete con R, los cuales, están tomados del libro <a href="https://r-pkgs.org/whole-game.html">Paquetes R (2e)</a> escrito por Hadley Wickham y Jennifer Bryan. En particular, se presenta un resumen del primer capítulo “The Whole Game” (se recomienda replicar el ejemplo desarrollado en este capítulo) y algunas otras secciones.</p>
 <section id="ruta-de-trabajo" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Ruta de trabajo</h1>
-<p>La creación de paquetes en R está asistida por diversos paquetes que facilitan el desarrollo, entre los cuales usaremos <em>devtools</em>, <em>usethis</em>, <em>roxygen2</em> y <em>sinew</em>, por lo que se requiere la instalación de estos. ## Estructura</p>
+<p>La creación de paquetes en R está asistida por diversos paquetes que facilitan el desarrollo, entre los cuales usaremos <em>devtools</em>, <em>usethis</em>, <em>roxygen2</em> y <em>sinew</em>, por lo que se requiere la instalación de estos.</p>
+<section id="estructura" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="estructura"><span class="header-section-number">1.1</span> Estructura</h2>
 <ol type="1">
 <li><p>Para crear un paquete, lo primero es crear un proyecto. Seleccione File -&gt; New Project -&gt; New Directory -&gt; R Package using devtools, o utilice el comando <code>create.package("~/dir/nombre_del_paquete")</code>. Esto creará un proyecto con los archivos:</p>
 <ul>
@@ -198,29 +201,30 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Para crear un archivo “Leáme” utilice el comando <code>use_readme_md()</code> del paquete <em>usethis</em>, lo cual, creará una archivo <strong>README.md</strong>. Este archivo se utiliza para hacer una presentación del paquete.</p></li>
 <li><p>Para crear un archivo de las actualizaciones del paquete utilice el comando <code>use_news_ms()</code> del paquete <em>usethis</em>, lo cual, creará una archivo <strong>NEWS.md</strong>. Este archivo se utiliza para informar de las actualizaciones que va teniendo el paquete; normalmente, cada actualización importante se identifica como una nueva versión del paquete.</p></li>
 </ol>
-<section id="añadir-bases-de-datos" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="añadir-bases-de-datos"><span class="header-section-number">1.1</span> Añadir bases de datos</h2>
+</section>
+<section id="añadir-bases-de-datos" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="añadir-bases-de-datos"><span class="header-section-number">1.2</span> Añadir bases de datos</h2>
 <p>Para almacenar bases de datos que se utilizan el paquete, ya sea para uso de ejemplos o para los ejercicios que el usuario estime conveniente, lo primero es cargar la base de datos y utilizar el comando <code>use_data("nombre de la base de datos en R")</code> del paquete <em>usethis</em>, esto creará la carpeta <strong>data/</strong> y guardará la base de datos con formato <strong>.rda</strong> (este proceso automáticamente crea la opción <strong>LazyData: true</strong> en el archivo <strong>DESCRIPTION</strong>).</p>
 <p>Por otro lado, si se desea guardar base de datos o cualquier otro elemento que no se desea añadir al paquete, se puede utilizar el comando <code>use_data_raw()</code>del paquete <em>usethis</em>, lo cual, creará la carpeta <strong>data-raw/</strong>, que si bien es para guardar datos que no se añade al paquete, podemos usarla también para añadir archivos con código.</p>
 </section>
-<section id="documentación" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="documentación"><span class="header-section-number">1.2</span> Documentación</h2>
-<section id="funciones" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" class="anchored" data-anchor-id="funciones"><span class="header-section-number">1.2.1</span> Funciones</h3>
+<section id="documentación" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="documentación"><span class="header-section-number">1.3</span> Documentación</h2>
+<section id="funciones" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="funciones"><span class="header-section-number">1.3.1</span> Funciones</h3>
 <p>Para añadir documentación de las funciones se utiliza el paquete <em>roxygen2</em>. Debe ubicarse dentro de la función, luego se utiliza la opción “Insert Roxygen Skeleton” ubicada en el engranaje que está en la barra de herramientas del archivo de código. Luego, ejecutando el comando <code>document()</code> se genera la documentación en formato <strong>.Rd</strong> en la carpeta <strong>man/</strong>. Esta carpeta se creará en caso de que no exista previamente.</p>
 </section>
-<section id="renombrar-funciones" class="level3" data-number="1.2.2">
-<h3 data-number="1.2.2" class="anchored" data-anchor-id="renombrar-funciones"><span class="header-section-number">1.2.2</span> Renombrar funciones</h3>
+<section id="renombrar-funciones" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="renombrar-funciones"><span class="header-section-number">1.3.2</span> Renombrar funciones</h3>
 <p>Si se desea cambiar el nombre de una función podemos realizarlo con el comando <code>rename_files("nombre antiguo", "nombre nuevo")</code>, esto cambiará el nombre del archivo <em>test</em> asociado a la función. Luego, es necesario que se ejecute nuevamente el comando <code>document()</code> para actualizar la viñeta de documentación y el NAMESPACE.</p>
 </section>
-<section id="bases-de-datos" class="level3" data-number="1.2.3">
-<h3 data-number="1.2.3" class="anchored" data-anchor-id="bases-de-datos"><span class="header-section-number">1.2.3</span> Bases de datos</h3>
+<section id="bases-de-datos" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="bases-de-datos"><span class="header-section-number">1.3.3</span> Bases de datos</h3>
 <p>Es necesario documentar las bases de datos que se encuentran en la carpeta <strong>data/</strong>, para ello se recomienda crear el archivo <strong>R/data.R</strong>. Luego, mediante el paquete y comando <code>sinew::makeOxygen("nombre de la base", add_fields = "source")</code> se imprime en consola el esqueleto de la documentación de la base de datos en formato <strong>roxygen2</strong>. En necesario que la base de datos se encuentre previamente cargada en el ambiente.</p>
 <p>No olvide ejecutar el comando <code>document()</code> para crear la viñeta correspondiente.</p>
 </section>
 </section>
-<section id="funcionamiento" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="funcionamiento"><span class="header-section-number">1.3</span> Funcionamiento</h2>
+<section id="funcionamiento" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="funcionamiento"><span class="header-section-number">1.4</span> Funcionamiento</h2>
 <p>Para probar las funciones sin instalar el paquete se debe utilizar la función <code>load_all()</code>. La función <code>check()</code> verifica todos los procesos.</p>
 </section>
 </section>
