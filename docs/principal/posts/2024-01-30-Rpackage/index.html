@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Daniel Franzani - Elaborar paquetes en R utilizando devtools</title>
+<title>Daniel Franzani - Elaborar paquetes en R utilizando el paquete devtools</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -122,26 +122,21 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En esta página</h2>
    
   <ul>
-  <li><a href="#ruta-de-trabajo" id="toc-ruta-de-trabajo" class="nav-link active" data-scroll-target="#ruta-de-trabajo"><span class="header-section-number">1</span> Ruta de trabajo</a>
+  <li><a href="#estructura-inicial" id="toc-estructura-inicial" class="nav-link active" data-scroll-target="#estructura-inicial"><span class="header-section-number">1</span> Estructura inicial</a></li>
+  <li><a href="#añadir-bases-de-datos" id="toc-añadir-bases-de-datos" class="nav-link" data-scroll-target="#añadir-bases-de-datos"><span class="header-section-number">2</span> Añadir bases de datos</a></li>
+  <li><a href="#documentación" id="toc-documentación" class="nav-link" data-scroll-target="#documentación"><span class="header-section-number">3</span> Documentación</a>
   <ul class="collapse">
-  <li><a href="#estructura" id="toc-estructura" class="nav-link" data-scroll-target="#estructura"><span class="header-section-number">1.1</span> Estructura</a></li>
-  <li><a href="#añadir-bases-de-datos" id="toc-añadir-bases-de-datos" class="nav-link" data-scroll-target="#añadir-bases-de-datos"><span class="header-section-number">1.2</span> Añadir bases de datos</a></li>
-  <li><a href="#documentación" id="toc-documentación" class="nav-link" data-scroll-target="#documentación"><span class="header-section-number">1.3</span> Documentación</a>
-  <ul class="collapse">
-  <li><a href="#funciones" id="toc-funciones" class="nav-link" data-scroll-target="#funciones"><span class="header-section-number">1.3.1</span> Funciones</a></li>
-  <li><a href="#renombrar-funciones" id="toc-renombrar-funciones" class="nav-link" data-scroll-target="#renombrar-funciones"><span class="header-section-number">1.3.2</span> Renombrar funciones</a></li>
-  <li><a href="#bases-de-datos" id="toc-bases-de-datos" class="nav-link" data-scroll-target="#bases-de-datos"><span class="header-section-number">1.3.3</span> Bases de datos</a></li>
+  <li><a href="#funciones" id="toc-funciones" class="nav-link" data-scroll-target="#funciones"><span class="header-section-number">3.1</span> Funciones</a></li>
+  <li><a href="#renombrar-funciones" id="toc-renombrar-funciones" class="nav-link" data-scroll-target="#renombrar-funciones"><span class="header-section-number">3.2</span> Renombrar funciones</a></li>
+  <li><a href="#bases-de-datos" id="toc-bases-de-datos" class="nav-link" data-scroll-target="#bases-de-datos"><span class="header-section-number">3.3</span> Bases de datos</a></li>
+  <li><a href="#viñetas-opcionales" id="toc-viñetas-opcionales" class="nav-link" data-scroll-target="#viñetas-opcionales"><span class="header-section-number">3.4</span> Viñetas opcionales</a></li>
   </ul></li>
-  <li><a href="#funcionamiento" id="toc-funcionamiento" class="nav-link" data-scroll-target="#funcionamiento"><span class="header-section-number">1.4</span> Funcionamiento</a></li>
-  </ul></li>
-  <li><a href="#otros-aspectos" id="toc-otros-aspectos" class="nav-link" data-scroll-target="#otros-aspectos"><span class="header-section-number">2</span> Otros aspectos</a>
+  <li><a href="#funcionamiento" id="toc-funcionamiento" class="nav-link" data-scroll-target="#funcionamiento"><span class="header-section-number">4</span> Funcionamiento</a></li>
+  <li><a href="#pruebas" id="toc-pruebas" class="nav-link" data-scroll-target="#pruebas"><span class="header-section-number">5</span> Pruebas</a></li>
+  <li><a href="#logo" id="toc-logo" class="nav-link" data-scroll-target="#logo"><span class="header-section-number">6</span> Logo</a></li>
+  <li><a href="#problemassoluciones" id="toc-problemassoluciones" class="nav-link" data-scroll-target="#problemassoluciones"><span class="header-section-number">7</span> Problemas/Soluciones</a>
   <ul class="collapse">
-  <li><a href="#pruebas" id="toc-pruebas" class="nav-link" data-scroll-target="#pruebas"><span class="header-section-number">2.1</span> Pruebas</a></li>
-  <li><a href="#logo" id="toc-logo" class="nav-link" data-scroll-target="#logo"><span class="header-section-number">2.2</span> Logo</a></li>
-  </ul></li>
-  <li><a href="#problemassoluciones" id="toc-problemassoluciones" class="nav-link" data-scroll-target="#problemassoluciones"><span class="header-section-number">3</span> Problemas/Soluciones</a>
-  <ul class="collapse">
-  <li><a href="#ubuntu-22.04.3-lts" id="toc-ubuntu-22.04.3-lts" class="nav-link" data-scroll-target="#ubuntu-22.04.3-lts"><span class="header-section-number">3.1</span> Ubuntu (22.04.3 LTS)</a></li>
+  <li><a href="#ubuntu-22.04.3-lts" id="toc-ubuntu-22.04.3-lts" class="nav-link" data-scroll-target="#ubuntu-22.04.3-lts"><span class="header-section-number">7.1</span> Ubuntu (22.04.3 LTS +)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -151,7 +146,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Elaborar paquetes en R utilizando <em>devtools</em></h1>
+<h1 class="title">Elaborar paquetes en R utilizando el paquete <em>devtools</em></h1>
   <div class="quarto-categories">
     <div class="quarto-category">devtools</div>
     <div class="quarto-category">usethis</div>
@@ -168,7 +163,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">8 de febrero de 2024</p>
+      <p class="date">15 de junio de 2024</p>
     </div>
   </div>
   
@@ -181,70 +176,99 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>A continuación, se mencionan los principales aspectos que personalmente considero necesarios para la elaboración de un paquete con R, los cuales, están tomados del libro <a href="https://r-pkgs.org/whole-game.html">Paquetes R (2e)</a> escrito por Hadley Wickham y Jennifer Bryan. En particular, se presenta un resumen del primer capítulo “The Whole Game” (se recomienda replicar el ejemplo desarrollado en este capítulo) y algunas otras secciones.</p>
-<section id="ruta-de-trabajo" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Ruta de trabajo</h1>
-<p>La creación de paquetes en R está asistida por diversos paquetes que facilitan el desarrollo, entre los cuales usaremos <em>devtools</em>, <em>usethis</em>, <em>roxygen2</em> y <em>sinew</em>, por lo que se requiere la instalación de estos.</p>
-<section id="estructura" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="estructura"><span class="header-section-number">1.1</span> Estructura</h2>
+<p>La creación de paquetes en R está asistida por diversos paquetes que facilitan el desarrollo, entre los cuales usaremos <em>devtools</em>, <em>usethis</em>, <em>roxygen2</em> y <em>sinew</em>.</p>
+<section id="estructura-inicial" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Estructura inicial</h1>
 <ol type="1">
 <li><p>Para crear un paquete, lo primero es crear un proyecto. Seleccione File -&gt; New Project -&gt; New Directory -&gt; R Package using devtools, o utilice el comando <code>create.package("~/dir/nombre_del_paquete")</code>. Esto creará un proyecto con los archivos:</p>
 <ul>
 <li><strong>.Rbuildignore</strong>: archivos que no se deben incluir en la creación del paquete. No necesita manipular este archivo.</li>
 <li><strong>.gitignore</strong>: control de archivos en Git. No necesita manipular este archivo (por el momento).</li>
-<li><strong>DESCRIPTION</strong>: Contiene los metadatos del paquete (información del paquete). Puede editar el archivo para modificar los antecedentes, sin embargo, otro tipo de información será añadida/modificada directamente mediante otros comandos que se mencionarán más adelante.</li>
+<li><strong>DESCRIPTION</strong>: Contiene los metadatos del paquete (información del paquete). Puede editar el archivo para modificar los antecedentes (para saber que información se puede introducir manualmente, consulte la <a href="https://r-pkgs.org/description.html">documentación</a>), sin embargo, otro tipo de información será añadida/modificada directamente mediante otros comandos que se mencionan más adelante.</li>
 <li><strong>NAMESPACE</strong>: contiene los nombres de las funciones que el paquete utiliza y exporta (las que se crean). No se necesita manipular este archivo, ya que hay comando que se encargan de la modificación de este.</li>
 <li><strong>.Rproj</strong>: archivo del directorio de trabajo. No necesita manipular este archivo.</li>
 </ul>
-<p>y la carpeta <strong>R</strong>, la cual, contiene todos los archivos <strong>.R</strong> con las funciones creadas.</p></li>
-<li><p>Los archivos .R pueden ser creados manualmente desde la barra de herramientas, aunque también es posible utilizar el comando <code>use_r("nombre_del_archivo")</code> del paquete <em>usethis</em>.</p></li>
-<li><p>Para incorporar un licencia de uso a su paquete (en caso de que lo crea relevante) utilice el comando <code>use_mit_license()</code> del paquete <em>usethis</em>. Hay otros tipos de licencias que son proporcionadas por este paquete (consulte <a href="https://usethis.r-lib.org/reference/licenses.html">aquí</a>).</p></li>
-<li><p>Para crear un archivo “Leáme” utilice el comando <code>use_readme_md()</code> del paquete <em>usethis</em>, lo cual, creará una archivo <strong>README.md</strong>. Este archivo se utiliza para hacer una presentación del paquete.</p></li>
-<li><p>Para crear un archivo de las actualizaciones del paquete utilice el comando <code>use_news_ms()</code> del paquete <em>usethis</em>, lo cual, creará una archivo <strong>NEWS.md</strong>. Este archivo se utiliza para informar de las actualizaciones que va teniendo el paquete; normalmente, cada actualización importante se identifica como una nueva versión del paquete.</p></li>
+<p>y la carpeta <strong>R</strong>, la cual, contiene todos los archivos <strong>.R</strong> con las funciones que se desee crear.</p></li>
+<li><p>Los archivos .R pueden ser creados manualmente desde la barra de herramientas, aunque también es posible utilizar el comando <code>usethis::use_r("nombre_del_archivo")</code>.</p></li>
+<li><p>Para incorporar un licencia de uso a su paquete (en caso de que lo crea relevante) utilice el comando <code>usethis::use_mit_license()</code>. Hay otros tipos de licencias que son proporcionadas por este paquete (consulte <a href="https://usethis.r-lib.org/reference/licenses.html">aquí</a>).</p></li>
+<li><p>Para crear un archivo “Leáme” utilice el comando <code>usethis::use_readme_md()</code>, lo cual, creará una archivo <strong>README.md</strong>. Este archivo se utiliza para hacer una presentación del paquete.</p></li>
+<li><p>Para crear un archivo de las actualizaciones del paquete utilice el comando <code>usethis::use_news_ms()</code>, lo cual, creará una archivo <strong>NEWS.md</strong>. Este archivo se utiliza para informar de las actualizaciones que va teniendo el paquete; normalmente, cada actualización importante se identifica como una nueva versión del paquete.</p></li>
 </ol>
 </section>
-<section id="añadir-bases-de-datos" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="añadir-bases-de-datos"><span class="header-section-number">1.2</span> Añadir bases de datos</h2>
-<p>Para almacenar bases de datos que se utilizan el paquete, ya sea para uso de ejemplos o para los ejercicios que el usuario estime conveniente, lo primero es cargar la base de datos y utilizar el comando <code>use_data("nombre de la base de datos en R")</code> del paquete <em>usethis</em>, esto creará la carpeta <strong>data/</strong> y guardará la base de datos con formato <strong>.rda</strong> (este proceso automáticamente crea la opción <strong>LazyData: true</strong> en el archivo <strong>DESCRIPTION</strong>).</p>
-<p>Por otro lado, si se desea guardar base de datos o cualquier otro elemento que no se desea añadir al paquete, se puede utilizar el comando <code>use_data_raw()</code>del paquete <em>usethis</em>, lo cual, creará la carpeta <strong>data-raw/</strong>, que si bien es para guardar datos que no se añade al paquete, podemos usarla también para añadir archivos con código.</p>
+<section id="añadir-bases-de-datos" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Añadir bases de datos</h1>
+<p>Para almacenar bases de datos que se utilizan el paquete, ya sea para uso de ejemplos o para los ejercicios que el usuario estime conveniente, lo primero es cargar la base de datos y utilizar el comando <code>usethis::use_data("nombre_base_de_datos en R")</code>, esto creará la carpeta <strong>data/</strong> y guardará la base de datos con formato <strong>.rda</strong> (este proceso automáticamente crea la opción <code>LazyData: true</code> en el archivo <strong>DESCRIPTION</strong>).</p>
+<p>Por otro lado, si se desea guardar base de datos o cualquier otro elemento que no se desea añadir al paquete, se puede utilizar el comando <code>usethis::use_data_raw()</code>, lo cual, creará la carpeta <strong>data-raw/</strong>, que si bien es para guardar datos que no se añade al paquete, podemos usarla también para añadir archivos con código.</p>
 </section>
-<section id="documentación" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="documentación"><span class="header-section-number">1.3</span> Documentación</h2>
-<section id="funciones" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="funciones"><span class="header-section-number">1.3.1</span> Funciones</h3>
-<p>Para añadir documentación de las funciones se utiliza el paquete <em>roxygen2</em>. Debe ubicarse dentro de la función, luego se utiliza la opción “Insert Roxygen Skeleton” ubicada en el engranaje que está en la barra de herramientas del archivo de código. Luego, ejecutando el comando <code>document()</code> se genera la documentación en formato <strong>.Rd</strong> en la carpeta <strong>man/</strong>. Esta carpeta se creará en caso de que no exista previamente.</p>
+<section id="documentación" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Documentación</h1>
+<section id="funciones" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="funciones"><span class="header-section-number">3.1</span> Funciones</h2>
+<p>Para añadir documentación de las funciones se utiliza el paquete <em>roxygen2</em>. Debe ubicarse dentro de la función, luego se utiliza la opción “Insert Roxygen Skeleton” desplegada al presionar en la varita que está en la barra de herramientas del archivo de código. Luego, ejecutando el comando <code>devtools::document()</code> se genera la documentación en formato <strong>.Rd</strong> en la carpeta <strong>man/</strong>. Esta carpeta se creará en caso de que no exista previamente.</p>
+<p>Un ejemplo de la documentación generada en una función es la siguiente.</p>
+<pre><code>#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
+ejemplo = function(){
+  print("Hola mundo")
+}</code></pre>
+<p>Los argumentos que se generan no son los únicos que se pueden utilizar, para saber que ingresar en cada uno de ellos y, cuales otros se pueden implementar, <a href="https://cran.r-project.org/web/packages/roxygen2/index.html">consulte la documentación</a>.</p>
+<p>En particular, uno de los argumentos más importantes es <code>#' @importFrom</code>, este argumento requiere que se ingresen las funciones utilizadas de paquetes (no todas las funciones necesariamente deben ingresarse) actualizando el archivo <strong>NAMESPACE</strong>, incluso, si olvidas rellenar este apartado, al momento de ejecutar la revisión con la opción <strong>check</strong> de la pestaña <strong>Build</strong> (mirar sección de Funcionamiento), te indicará la funciones que faltan por importar.</p>
+<pre><code>#' Title
+#'
+#' @param x
+#' @param y
+#'
+#' @return
+#' @export
+#'
+#' @importFrom graphics points
+ejemplo = function(x,y){
+  plot(x,y)
+  points(y,x)
+}</code></pre>
+<p>Existe una segunda forma de hacerlo, y es usando el comando <code>usethis::use_import_from("nombre_del_paquete", "función")</code>, esto actualizará tanto el <strong>NAMESPACE</strong> como el archivo <strong>R/nombre_del_paquete-package.R</strong> (detalle de este archivo en la sección de Viñetas), el cual, contiene también las funciones importada.</p>
+<p>Ambos métodos son factibles para importar las funciones; si se desea, se pueden usar ambos sin preocuparse por la existencia de conflictos.</p>
 </section>
-<section id="renombrar-funciones" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="renombrar-funciones"><span class="header-section-number">1.3.2</span> Renombrar funciones</h3>
-<p>Si se desea cambiar el nombre de una función podemos realizarlo con el comando <code>rename_files("nombre antiguo", "nombre nuevo")</code>, esto cambiará el nombre del archivo <em>test</em> asociado a la función. Luego, es necesario que se ejecute nuevamente el comando <code>document()</code> para actualizar la viñeta de documentación y el NAMESPACE.</p>
+<section id="renombrar-funciones" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="renombrar-funciones"><span class="header-section-number">3.2</span> Renombrar funciones</h2>
+<p>Si se desea cambiar el nombre de una función podemos realizarlo con el comando <code>usethis::rename_files("nombre_antiguo", "nombre_nuevo")</code>, esto cambiará el nombre del archivo <em>test</em> asociado a la función. Luego, es necesario que se ejecute nuevamente el comando <code>document()</code> para actualizar la viñeta de documentación y el <strong>NAMESPACE</strong>.</p>
 </section>
-<section id="bases-de-datos" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" class="anchored" data-anchor-id="bases-de-datos"><span class="header-section-number">1.3.3</span> Bases de datos</h3>
-<p>Es necesario documentar las bases de datos que se encuentran en la carpeta <strong>data/</strong>, para ello se recomienda crear el archivo <strong>R/data.R</strong>. Luego, mediante el paquete y comando <code>sinew::makeOxygen("nombre de la base", add_fields = "source")</code> se imprime en consola el esqueleto de la documentación de la base de datos en formato <strong>roxygen2</strong>. En necesario que la base de datos se encuentre previamente cargada en el ambiente.</p>
-<p>No olvide ejecutar el comando <code>document()</code> para crear la viñeta correspondiente.</p>
+<section id="bases-de-datos" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="bases-de-datos"><span class="header-section-number">3.3</span> Bases de datos</h2>
+<p>Es necesario documentar las bases de datos que se encuentran en la carpeta <strong>data/</strong>, para ello se recomienda crear el archivo <strong>R/data.R</strong>. Luego, mediante el paquete y comando <code>sinew::makeOxygen("nombre_base_de_datos", add_fields = "source")</code> se imprime en consola el esqueleto de la documentación de la base de datos en formato <strong>roxygen2</strong>. En necesario que la base de datos se encuentre previamente cargada en el ambiente.</p>
+<p>No olvide ejecutar el comando <code>devtools::document()</code> para crear la viñeta correspondiente.</p>
+</section>
+<section id="viñetas-opcionales" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="viñetas-opcionales"><span class="header-section-number">3.4</span> Viñetas opcionales</h2>
+<p>Las viñetas son pestañas extras que tienen los paquetes que sirven en caso de que la documentación sea extensa, o si se desea explicar algo en profundidad. Este tipo de archivo no es imprescindible en el paquete.</p>
+<p>Para crear una viñeta se debe utilizar el comando&nbsp;<code>usethis::use_vignette("nombre_de_la_viñeta_a_crear)</code>. Automáticamente, se crea la carpeta de viñetas <strong>vignettes</strong>. Para poder observar estas viñetas, lo primero es instalar el paquete, y luego construir las viñetas mediante el comando&nbsp;<code>devtools::install(build_vignettes = TRUE)</code>. Sin embargo, para poder instalar las viñetas desde github al momento de instalar el paquete, se deberá ejecutar&nbsp;<code>devtools::install_github("ruta_github", build_vignettes = TRUE)</code>.</p>
+<p>Una viñeta especial y que es totalmente opcional es la de resumen del paquete, y es la que se visualiza al ejecutar <code>help("nombre_del_paquete")</code>, para ello, se debe usar el comando&nbsp;<code>usethis::use_package_doc()</code>, lo que genera un archivo&nbsp;<strong>R/nombre_del_paquete-package.R</strong>, el cual, puede ser editado/usado para actualizar las funciones que se importan de otros paquetes. Luego, se debe ejecutar&nbsp;<code>devtools::document()</code>, lo que permite tomar parte de la información de archivo <strong>DESCRIPTION</strong> para generar una viñeta del paquete (el logo se incrusta automáticamente si ya está creado de antemano, sino, al ejecutar&nbsp;<code>devtools::document()</code>&nbsp;se añadirá).</p>
 </section>
 </section>
-<section id="funcionamiento" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="funcionamiento"><span class="header-section-number">1.4</span> Funcionamiento</h2>
-<p>Para probar las funciones sin instalar el paquete se debe utilizar la función <code>load_all()</code>. La función <code>check()</code> verifica todos los procesos.</p>
+<section id="funcionamiento" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Funcionamiento</h1>
+<p>Para probar las funciones sin instalar el paquete se debe utilizar la función <code>devtools::load_all()</code>. La función <code>devtools::check()</code> verifica todos los procesos. Otra forma de realizar los mismo, es presionar en la opción <strong>check</strong> de la pestaña <strong>Build</strong>.</p>
+<p>Este proceso indicará todo tipo de errores que se deben corregir para que la construcción sea óptima. Se recomienda ejecutar el comando <code>devtools::check()</code> cada vez que se realicen cambios, para mantener un control constante del código.</p>
+<p>Para instalar su paquete en el equipo local, utilice la función <code>devtools::install()</code> o bien en la pestaña de <strong>Build</strong> presiona la opción <strong>Install</strong>.</p>
 </section>
+<section id="pruebas" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Pruebas</h1>
+<p>El comando <code>usethis::use_testthat()</code> genera las funciones de prueba para verificar el funcionamiento del paquete, creando la carpeta <strong>test/testthat/archivo_a_modificar</strong>. El resto de archivos creados no se deben modificar.</p>
+<p>Las funciones se deben editar manualmente. Para entender el funcionamiento de las pruebas consulte la <a href="https://r-pkgs.org/testing-basics.html">documentación</a>.</p>
 </section>
-<section id="otros-aspectos" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Otros aspectos</h1>
-<section id="pruebas" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="pruebas"><span class="header-section-number">2.1</span> Pruebas</h2>
-<p>El comando <code>use_testthat()</code> genera las funciones de prueba para verificar el funcionamiento del paquete, creando la carpeta <strong>test/testthat/archivo_a_modificar</strong>.</p>
-<p>Las funciones se deben editar manualmente.</p>
-</section>
-<section id="logo" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="logo"><span class="header-section-number">2.2</span> Logo</h2>
+<section id="logo" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Logo</h1>
 <p>Para crear un logo del paquete se debe utilizar el paquete <em>hexsticker</em>, el cual se puede complementar con los paquetes <em>magick</em> (para gráficos) y <em>sysfonts</em> (para fuentes)</p>
-<p>El logo combiene guardarlo en la carpeta <strong>data-raw/</strong>. Luego, para incrustar el logo en el paquete se debe utilizar el comando <code>use_logo("ruta_donde_está_guardado_el_logo)</code>. Este comando colocará el logo en la carpeta <strong>man/figures/</strong> y proporcionará un fragmento de código para incrustar el logo en archivo README (debe pegar este código en archivo README).</p>
+<p>El logo combiene guardarlo en la carpeta <strong>data-raw/</strong>. Luego, para incrustar el logo en el paquete se debe utilizar el comando <code>usethis::use_logo("ruta_donde_está_guardado_el_logo")</code>. Este comando colocará el logo en la carpeta <strong>man/figures/</strong> y proporcionará un fragmento de código para incrustar el logo en archivo README (debe pegar este código en archivo README).</p>
 </section>
-</section>
-<section id="problemassoluciones" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Problemas/Soluciones</h1>
-<section id="ubuntu-22.04.3-lts" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="ubuntu-22.04.3-lts"><span class="header-section-number">3.1</span> Ubuntu (22.04.3 LTS)</h2>
+<section id="problemassoluciones" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Problemas/Soluciones</h1>
+<section id="ubuntu-22.04.3-lts" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="ubuntu-22.04.3-lts"><span class="header-section-number">7.1</span> Ubuntu (22.04.3 LTS +)</h2>
 <ul>
 <li>Caracteres ASCII: es posible recibir la nota de que algunas de las bases de datos (de la carpeta data) no tienen únicamente caracteres ASCII, lo cual, viene acompañado de un mensaje en el que se indica que el paquete <strong>qpdf</strong> es necesario para reducir el tamaño de los PDF. Para solucionar este problema ejecute <code>sudo apt install qpdf</code>.</li>
 </ul>

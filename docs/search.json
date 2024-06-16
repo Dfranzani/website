@@ -60,62 +60,48 @@
     "href": "principal/blog.html",
     "title": "Posts",
     "section": "",
-    "text": "Fecha\n\n\nTítulo\n\n\n\n\n\n\n8/2/24\n\n\nElaborar paquetes en R utilizando devtools\n\n\n\n\n19/9/21\n\n\nProblema de las n - reinas\n\n\n\n\n\nNo hay resultados"
+    "text": "Fecha\n\n\nTítulo\n\n\n\n\n\n\n15/6/24\n\n\nElaborar paquetes en R utilizando el paquete devtools\n\n\n\n\n19/9/21\n\n\nProblema de las n - reinas\n\n\n\n\n\nNo hay resultados"
   },
   {
     "objectID": "principal/posts/2024-01-30-Rpackage/index.html",
     "href": "principal/posts/2024-01-30-Rpackage/index.html",
-    "title": "Elaborar paquetes en R utilizando devtools",
+    "title": "Elaborar paquetes en R utilizando el paquete devtools",
     "section": "",
-    "text": "A continuación, se mencionan los principales aspectos que personalmente considero necesarios para la elaboración de un paquete con R, los cuales, están tomados del libro Paquetes R (2e) escrito por Hadley Wickham y Jennifer Bryan. En particular, se presenta un resumen del primer capítulo “The Whole Game” (se recomienda replicar el ejemplo desarrollado en este capítulo) y algunas otras secciones."
+    "text": "A continuación, se mencionan los principales aspectos que personalmente considero necesarios para la elaboración de un paquete con R, los cuales, están tomados del libro Paquetes R (2e) escrito por Hadley Wickham y Jennifer Bryan. En particular, se presenta un resumen del primer capítulo “The Whole Game” (se recomienda replicar el ejemplo desarrollado en este capítulo) y algunas otras secciones.\nLa creación de paquetes en R está asistida por diversos paquetes que facilitan el desarrollo, entre los cuales usaremos devtools, usethis, roxygen2 y sinew."
   },
   {
-    "objectID": "principal/posts/2024-01-30-Rpackage/index.html#estructura",
-    "href": "principal/posts/2024-01-30-Rpackage/index.html#estructura",
-    "title": "Elaborar paquetes en R utilizando devtools",
-    "section": "1.1 Estructura",
-    "text": "1.1 Estructura\n\nPara crear un paquete, lo primero es crear un proyecto. Seleccione File -&gt; New Project -&gt; New Directory -&gt; R Package using devtools, o utilice el comando create.package(\"~/dir/nombre_del_paquete\"). Esto creará un proyecto con los archivos:\n\n.Rbuildignore: archivos que no se deben incluir en la creación del paquete. No necesita manipular este archivo.\n.gitignore: control de archivos en Git. No necesita manipular este archivo (por el momento).\nDESCRIPTION: Contiene los metadatos del paquete (información del paquete). Puede editar el archivo para modificar los antecedentes, sin embargo, otro tipo de información será añadida/modificada directamente mediante otros comandos que se mencionarán más adelante.\nNAMESPACE: contiene los nombres de las funciones que el paquete utiliza y exporta (las que se crean). No se necesita manipular este archivo, ya que hay comando que se encargan de la modificación de este.\n.Rproj: archivo del directorio de trabajo. No necesita manipular este archivo.\n\ny la carpeta R, la cual, contiene todos los archivos .R con las funciones creadas.\nLos archivos .R pueden ser creados manualmente desde la barra de herramientas, aunque también es posible utilizar el comando use_r(\"nombre_del_archivo\") del paquete usethis.\nPara incorporar un licencia de uso a su paquete (en caso de que lo crea relevante) utilice el comando use_mit_license() del paquete usethis. Hay otros tipos de licencias que son proporcionadas por este paquete (consulte aquí).\nPara crear un archivo “Leáme” utilice el comando use_readme_md() del paquete usethis, lo cual, creará una archivo README.md. Este archivo se utiliza para hacer una presentación del paquete.\nPara crear un archivo de las actualizaciones del paquete utilice el comando use_news_ms() del paquete usethis, lo cual, creará una archivo NEWS.md. Este archivo se utiliza para informar de las actualizaciones que va teniendo el paquete; normalmente, cada actualización importante se identifica como una nueva versión del paquete."
+    "objectID": "principal/posts/2024-01-30-Rpackage/index.html#funciones",
+    "href": "principal/posts/2024-01-30-Rpackage/index.html#funciones",
+    "title": "Elaborar paquetes en R utilizando el paquete devtools",
+    "section": "3.1 Funciones",
+    "text": "3.1 Funciones\nPara añadir documentación de las funciones se utiliza el paquete roxygen2. Debe ubicarse dentro de la función, luego se utiliza la opción “Insert Roxygen Skeleton” desplegada al presionar en la varita que está en la barra de herramientas del archivo de código. Luego, ejecutando el comando devtools::document() se genera la documentación en formato .Rd en la carpeta man/. Esta carpeta se creará en caso de que no exista previamente.\nUn ejemplo de la documentación generada en una función es la siguiente.\n#' Title\n#'\n#' @return\n#' @export\n#'\n#' @examples\nejemplo = function(){\n  print(\"Hola mundo\")\n}\nLos argumentos que se generan no son los únicos que se pueden utilizar, para saber que ingresar en cada uno de ellos y, cuales otros se pueden implementar, consulte la documentación.\nEn particular, uno de los argumentos más importantes es #' @importFrom, este argumento requiere que se ingresen las funciones utilizadas de paquetes (no todas las funciones necesariamente deben ingresarse) actualizando el archivo NAMESPACE, incluso, si olvidas rellenar este apartado, al momento de ejecutar la revisión con la opción check de la pestaña Build (mirar sección de Funcionamiento), te indicará la funciones que faltan por importar.\n#' Title\n#'\n#' @param x\n#' @param y\n#'\n#' @return\n#' @export\n#'\n#' @importFrom graphics points\nejemplo = function(x,y){\n  plot(x,y)\n  points(y,x)\n}\nExiste una segunda forma de hacerlo, y es usando el comando usethis::use_import_from(\"nombre_del_paquete\", \"función\"), esto actualizará tanto el NAMESPACE como el archivo R/nombre_del_paquete-package.R (detalle de este archivo en la sección de Viñetas), el cual, contiene también las funciones importada.\nAmbos métodos son factibles para importar las funciones; si se desea, se pueden usar ambos sin preocuparse por la existencia de conflictos."
   },
   {
-    "objectID": "principal/posts/2024-01-30-Rpackage/index.html#añadir-bases-de-datos",
-    "href": "principal/posts/2024-01-30-Rpackage/index.html#añadir-bases-de-datos",
-    "title": "Elaborar paquetes en R utilizando devtools",
-    "section": "1.2 Añadir bases de datos",
-    "text": "1.2 Añadir bases de datos\nPara almacenar bases de datos que se utilizan el paquete, ya sea para uso de ejemplos o para los ejercicios que el usuario estime conveniente, lo primero es cargar la base de datos y utilizar el comando use_data(\"nombre de la base de datos en R\") del paquete usethis, esto creará la carpeta data/ y guardará la base de datos con formato .rda (este proceso automáticamente crea la opción LazyData: true en el archivo DESCRIPTION).\nPor otro lado, si se desea guardar base de datos o cualquier otro elemento que no se desea añadir al paquete, se puede utilizar el comando use_data_raw()del paquete usethis, lo cual, creará la carpeta data-raw/, que si bien es para guardar datos que no se añade al paquete, podemos usarla también para añadir archivos con código."
+    "objectID": "principal/posts/2024-01-30-Rpackage/index.html#renombrar-funciones",
+    "href": "principal/posts/2024-01-30-Rpackage/index.html#renombrar-funciones",
+    "title": "Elaborar paquetes en R utilizando el paquete devtools",
+    "section": "3.2 Renombrar funciones",
+    "text": "3.2 Renombrar funciones\nSi se desea cambiar el nombre de una función podemos realizarlo con el comando usethis::rename_files(\"nombre_antiguo\", \"nombre_nuevo\"), esto cambiará el nombre del archivo test asociado a la función. Luego, es necesario que se ejecute nuevamente el comando document() para actualizar la viñeta de documentación y el NAMESPACE."
   },
   {
-    "objectID": "principal/posts/2024-01-30-Rpackage/index.html#documentación",
-    "href": "principal/posts/2024-01-30-Rpackage/index.html#documentación",
-    "title": "Elaborar paquetes en R utilizando devtools",
-    "section": "1.3 Documentación",
-    "text": "1.3 Documentación\n\n1.3.1 Funciones\nPara añadir documentación de las funciones se utiliza el paquete roxygen2. Debe ubicarse dentro de la función, luego se utiliza la opción “Insert Roxygen Skeleton” ubicada en el engranaje que está en la barra de herramientas del archivo de código. Luego, ejecutando el comando document() se genera la documentación en formato .Rd en la carpeta man/. Esta carpeta se creará en caso de que no exista previamente.\n\n\n1.3.2 Renombrar funciones\nSi se desea cambiar el nombre de una función podemos realizarlo con el comando rename_files(\"nombre antiguo\", \"nombre nuevo\"), esto cambiará el nombre del archivo test asociado a la función. Luego, es necesario que se ejecute nuevamente el comando document() para actualizar la viñeta de documentación y el NAMESPACE.\n\n\n1.3.3 Bases de datos\nEs necesario documentar las bases de datos que se encuentran en la carpeta data/, para ello se recomienda crear el archivo R/data.R. Luego, mediante el paquete y comando sinew::makeOxygen(\"nombre de la base\", add_fields = \"source\") se imprime en consola el esqueleto de la documentación de la base de datos en formato roxygen2. En necesario que la base de datos se encuentre previamente cargada en el ambiente.\nNo olvide ejecutar el comando document() para crear la viñeta correspondiente."
+    "objectID": "principal/posts/2024-01-30-Rpackage/index.html#bases-de-datos",
+    "href": "principal/posts/2024-01-30-Rpackage/index.html#bases-de-datos",
+    "title": "Elaborar paquetes en R utilizando el paquete devtools",
+    "section": "3.3 Bases de datos",
+    "text": "3.3 Bases de datos\nEs necesario documentar las bases de datos que se encuentran en la carpeta data/, para ello se recomienda crear el archivo R/data.R. Luego, mediante el paquete y comando sinew::makeOxygen(\"nombre_base_de_datos\", add_fields = \"source\") se imprime en consola el esqueleto de la documentación de la base de datos en formato roxygen2. En necesario que la base de datos se encuentre previamente cargada en el ambiente.\nNo olvide ejecutar el comando devtools::document() para crear la viñeta correspondiente."
   },
   {
-    "objectID": "principal/posts/2024-01-30-Rpackage/index.html#funcionamiento",
-    "href": "principal/posts/2024-01-30-Rpackage/index.html#funcionamiento",
-    "title": "Elaborar paquetes en R utilizando devtools",
-    "section": "1.4 Funcionamiento",
-    "text": "1.4 Funcionamiento\nPara probar las funciones sin instalar el paquete se debe utilizar la función load_all(). La función check() verifica todos los procesos."
-  },
-  {
-    "objectID": "principal/posts/2024-01-30-Rpackage/index.html#pruebas",
-    "href": "principal/posts/2024-01-30-Rpackage/index.html#pruebas",
-    "title": "Elaborar paquetes en R utilizando devtools",
-    "section": "2.1 Pruebas",
-    "text": "2.1 Pruebas\nEl comando use_testthat() genera las funciones de prueba para verificar el funcionamiento del paquete, creando la carpeta test/testthat/archivo_a_modificar.\nLas funciones se deben editar manualmente."
-  },
-  {
-    "objectID": "principal/posts/2024-01-30-Rpackage/index.html#logo",
-    "href": "principal/posts/2024-01-30-Rpackage/index.html#logo",
-    "title": "Elaborar paquetes en R utilizando devtools",
-    "section": "2.2 Logo",
-    "text": "2.2 Logo\nPara crear un logo del paquete se debe utilizar el paquete hexsticker, el cual se puede complementar con los paquetes magick (para gráficos) y sysfonts (para fuentes)\nEl logo combiene guardarlo en la carpeta data-raw/. Luego, para incrustar el logo en el paquete se debe utilizar el comando use_logo(\"ruta_donde_está_guardado_el_logo). Este comando colocará el logo en la carpeta man/figures/ y proporcionará un fragmento de código para incrustar el logo en archivo README (debe pegar este código en archivo README)."
+    "objectID": "principal/posts/2024-01-30-Rpackage/index.html#viñetas-opcionales",
+    "href": "principal/posts/2024-01-30-Rpackage/index.html#viñetas-opcionales",
+    "title": "Elaborar paquetes en R utilizando el paquete devtools",
+    "section": "3.4 Viñetas opcionales",
+    "text": "3.4 Viñetas opcionales\nLas viñetas son pestañas extras que tienen los paquetes que sirven en caso de que la documentación sea extensa, o si se desea explicar algo en profundidad. Este tipo de archivo no es imprescindible en el paquete.\nPara crear una viñeta se debe utilizar el comando usethis::use_vignette(\"nombre_de_la_viñeta_a_crear). Automáticamente, se crea la carpeta de viñetas vignettes. Para poder observar estas viñetas, lo primero es instalar el paquete, y luego construir las viñetas mediante el comando devtools::install(build_vignettes = TRUE). Sin embargo, para poder instalar las viñetas desde github al momento de instalar el paquete, se deberá ejecutar devtools::install_github(\"ruta_github\", build_vignettes = TRUE).\nUna viñeta especial y que es totalmente opcional es la de resumen del paquete, y es la que se visualiza al ejecutar help(\"nombre_del_paquete\"), para ello, se debe usar el comando usethis::use_package_doc(), lo que genera un archivo R/nombre_del_paquete-package.R, el cual, puede ser editado/usado para actualizar las funciones que se importan de otros paquetes. Luego, se debe ejecutar devtools::document(), lo que permite tomar parte de la información de archivo DESCRIPTION para generar una viñeta del paquete (el logo se incrusta automáticamente si ya está creado de antemano, sino, al ejecutar devtools::document() se añadirá)."
   },
   {
     "objectID": "principal/posts/2024-01-30-Rpackage/index.html#ubuntu-22.04.3-lts",
     "href": "principal/posts/2024-01-30-Rpackage/index.html#ubuntu-22.04.3-lts",
-    "title": "Elaborar paquetes en R utilizando devtools",
-    "section": "3.1 Ubuntu (22.04.3 LTS)",
-    "text": "3.1 Ubuntu (22.04.3 LTS)\n\nCaracteres ASCII: es posible recibir la nota de que algunas de las bases de datos (de la carpeta data) no tienen únicamente caracteres ASCII, lo cual, viene acompañado de un mensaje en el que se indica que el paquete qpdf es necesario para reducir el tamaño de los PDF. Para solucionar este problema ejecute sudo apt install qpdf."
+    "title": "Elaborar paquetes en R utilizando el paquete devtools",
+    "section": "7.1 Ubuntu (22.04.3 LTS +)",
+    "text": "7.1 Ubuntu (22.04.3 LTS +)\n\nCaracteres ASCII: es posible recibir la nota de que algunas de las bases de datos (de la carpeta data) no tienen únicamente caracteres ASCII, lo cual, viene acompañado de un mensaje en el que se indica que el paquete qpdf es necesario para reducir el tamaño de los PDF. Para solucionar este problema ejecute sudo apt install qpdf."
   }
 ]
