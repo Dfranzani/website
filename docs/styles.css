@@ -7,6 +7,6 @@ a {
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap');
 
 * {
-    font-family: 'Ubuntu', cursive, system-ui, sans-serif;
+    font-family: 'Ubuntu', system-ui, sans-serif;
 }
 
