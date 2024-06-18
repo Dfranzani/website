@@ -34,7 +34,6 @@ format:
     theme: sandstone
     css: styles.css
     toc: true
-    mainfont: system-ui
 execute: 
   freeze: auto
   cache: refresh
