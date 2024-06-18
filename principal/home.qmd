@@ -1,0 +1,30 @@
+---
+title: "Daniel Franzani"
+about: 
+ template: trestles
+ image: img.jpeg
+ image-shape: round
+ image-width: 150px
+ links:
+  - icon: github
+    text: "Github"
+    href: https://github.com/Dfranzani
+  - icon: linkedin
+    text: "Linkedin"
+    href: https://www.linkedin.com/in/dfranzani/
+  - icon: bi-file-earmark-pdf
+    text: CV
+    href: https://github.com/Dfranzani/CV/blob/main/CV.pdf
+toc: false
+lang: es
+grid:
+  sidebar-width: 0px
+  body-width: 1000px
+  margin-width: 0px
+  gutter-width: 20px
+comments: false
+---
+
+Actualmente soy docente y coordino los cursos de estadística en la Facultad de Administración y Economía de la Universidad Diego Portales. Obtuve mi grado de Magíster en Estadística y Magíster en Inteligencia Artificial en la Pontificia Universidad Católica de Chile y la Universidad Adolfo Ibañez respectivamente. En estos momentos, divido mi tiempo en el desarrollo de [sitios web](https://dfranzani.github.io/Estadistica_I/) estáticos para el apoyo de la docencia, y en el desarrollo de librerías de R para la ciencia de datos (por diversión). Soy admirador de [Github](https://github.com/Dfranzani), GNU-Linux ([Ubuntu](https://ubuntu.com/)) y [RStudio](https://posit.co/download/rstudio-desktop/). Este sitio web está creado con la finalidad de socializar conocimiento relacionado al uso de R en estadística y otras posibles temáticas.
+
+

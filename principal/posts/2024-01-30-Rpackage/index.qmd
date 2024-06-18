@@ -1,0 +1,132 @@
+---
+title: "Elaborar paquetes en R utilizando el paquete *devtools*"
+date: '2024-06-15'
+categories:
+  - devtools
+  - usethis
+  - roxygen
+  - sinew
+lang: es
+draft: false
+number-sections: true
+---
+
+A continuación, se mencionan los principales aspectos que personalmente considero necesarios para la elaboración de un paquete con R, los cuales, están tomados del libro [Paquetes R (2e)](https://r-pkgs.org/whole-game.html) escrito por Hadley Wickham y Jennifer Bryan. En particular, se presenta un resumen del primer capítulo "The Whole Game" (se recomienda replicar el ejemplo desarrollado en este capítulo) y algunas otras secciones.
+
+La creación de paquetes en R está asistida por diversos paquetes que facilitan el desarrollo, entre los cuales usaremos *devtools*, *usethis*, *roxygen2* y *sinew*. Además, se recomienda trabajar con R Studio, ya que, varios de los comandos se ejecutan desde la barra de herramientas.
+
+#  Estructura inicial
+
+1. Para crear un paquete, lo primero es crear un proyecto. Seleccione File -> New Project -> New Directory -> R Package using devtools, o utilice el comando `create.package("~/dir/nombre_del_paquete")`. Esto creará un proyecto con los archivos:
+
+   - **.Rbuildignore**: archivos que no se deben incluir en la creación del paquete. No necesita manipular este archivo.
+   - **.gitignore**: control de archivos en Git. No necesita manipular este archivo (por el momento).
+   - **DESCRIPTION**: Contiene los metadatos del paquete (información del paquete). Puede editar el archivo para modificar los antecedentes (para saber que información se puede introducir manualmente, consulte la [documentación](https://r-pkgs.org/description.html)), sin embargo, otro tipo de información será añadida/modificada directamente mediante otros comandos que se mencionan más adelante.
+   - **NAMESPACE**: contiene los nombres de las funciones que el paquete utiliza y exporta (las que se crean). No se necesita manipular este archivo, ya que hay comando que se encargan de la modificación de este.
+   - **.Rproj**: archivo del directorio de trabajo. No necesita manipular este archivo.
+   
+   y la carpeta **R**, la cual, contiene todos los archivos **.R** con las funciones que se desee crear.
+
+ 2. Los archivos .R pueden ser creados manualmente desde la barra de herramientas, aunque también es posible utilizar el comando `usethis::use_r("nombre_del_archivo")`.
+ 
+ 3. Para incorporar un licencia de uso a su paquete (en caso de que lo crea relevante) utilice el comando `usethis::use_mit_license()`. Hay otros tipos de licencias que son proporcionadas por este paquete (consulte [aquí](https://usethis.r-lib.org/reference/licenses.html)).
+ 
+ 4. Para crear un archivo "Leáme" utilice el comando `usethis::use_readme_md()`, lo cual, creará una archivo **README.md**. Este archivo se utiliza para hacer una presentación del paquete.
+ 
+ 5. Para crear un archivo de las actualizaciones del paquete utilice el comando `usethis::use_news_ms()`, lo cual, creará una archivo **NEWS.md**. Este archivo se utiliza para informar de las actualizaciones que va teniendo el paquete; normalmente, cada actualización importante se identifica como una nueva versión del paquete.
+ 
+# Añadir bases de datos
+
+Para almacenar bases de datos que se utilizan el paquete, ya sea para uso de ejemplos o para los ejercicios que el usuario estime conveniente, lo primero es cargar la base de datos y utilizar el comando `usethis::use_data("nombre_base_de_datos en R")`, esto creará la carpeta **data/** y guardará la base de datos con formato **.rda** (este proceso automáticamente crea la opción `LazyData: true` en el archivo **DESCRIPTION**). 
+
+Por otro lado, si se desea guardar base de datos o cualquier otro elemento que no se desea añadir al paquete, se puede utilizar el comando `usethis::use_data_raw()`, lo cual, creará la carpeta **data-raw/**, que si bien es para guardar datos que no se añade al paquete, podemos usarla también para añadir archivos con código.
+
+# Documentación
+
+## Funciones
+
+Para añadir documentación de las funciones se utiliza el paquete *roxygen2*. Debe ubicarse dentro de la función, luego se utiliza la opción "Insert Roxygen Skeleton" desplegada al presionar en la varita que está en la barra de herramientas del archivo de código. Luego, ejecutando el comando `devtools::document()` se genera la documentación en formato **.Rd** en la carpeta **man/**. Esta carpeta se creará en caso de que no exista previamente.
+
+Un ejemplo de la documentación generada en una función es la siguiente.
+
+```
+#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
+ejemplo = function(){
+  print("Hola mundo")
+}
+```
+
+Los argumentos que se generan no son los únicos que se pueden utilizar, para saber que ingresar en cada uno de ellos y, cuales otros se pueden implementar, [consulte la documentación](https://cran.r-project.org/web/packages/roxygen2/index.html).
+
+En particular, uno de los argumentos más importantes es `#' @importFrom`, este argumento requiere que se ingresen las funciones utilizadas de  paquetes (no todas las funciones necesariamente deben ingresarse) actualizando el archivo **NAMESPACE**, incluso, si olvidas rellenar este apartado, al momento de ejecutar la revisión con la opción **check** de la pestaña **Build** (mirar sección de Funcionamiento), te indicará la funciones que faltan por importar. 
+
+```
+#' Title
+#'
+#' @param x
+#' @param y
+#'
+#' @return
+#' @export
+#'
+#' @importFrom graphics points
+ejemplo = function(x,y){
+  plot(x,y)
+  points(y,x)
+}
+```
+
+Existe una segunda forma de hacerlo, y es usando el comando `usethis::use_import_from("nombre_del_paquete", "función")`, esto actualizará tanto el **NAMESPACE** como el archivo **R/nombre_del_paquete-package.R** (detalle de este archivo en la sección de Viñetas), el cual, contiene también las funciones importada.
+
+Ambos métodos son factibles para importar las funciones; si se desea, se pueden usar ambos sin preocuparse por la existencia de conflictos.
+
+## Renombrar funciones
+
+Si se desea cambiar el nombre de una función podemos realizarlo con el comando `usethis::rename_files("nombre_antiguo", "nombre_nuevo")`, esto cambiará el nombre del archivo *test* asociado a la función. Luego, es necesario que se ejecute nuevamente el comando `document()` para actualizar la viñeta de documentación y el **NAMESPACE**.
+
+## Bases de datos
+
+Es necesario documentar las bases de datos que se encuentran en la carpeta **data/**, para ello se recomienda crear el archivo **R/data.R**. Luego, mediante el paquete y comando `sinew::makeOxygen("nombre_base_de_datos", add_fields = "source")` se imprime en consola el esqueleto de la documentación de la base de datos en formato **roxygen2**. En necesario que la base de datos se encuentre previamente cargada en el ambiente. 
+
+No olvide ejecutar el comando `devtools::document()` para crear la viñeta correspondiente.
+
+## Viñetas opcionales
+
+Las viñetas son pestañas extras que tienen los paquetes que sirven en caso de que la documentación sea extensa, o si se desea explicar algo en profundidad. Este tipo de archivo no es imprescindible en el paquete.
+
+Para crear una viñeta se debe utilizar el comando `usethis::use_vignette("nombre_de_la_viñeta_a_crear)`. Automáticamente, se crea la carpeta de viñetas **vignettes**. Para poder observar estas viñetas, lo primero es instalar el paquete, y luego construir las viñetas mediante el comando `devtools::install(build_vignettes = TRUE)`. Sin embargo, para poder instalar las viñetas desde github al momento de instalar el paquete, se deberá ejecutar `devtools::install_github("ruta_github", build_vignettes = TRUE)`.
+
+Una viñeta especial y que es totalmente opcional es la de resumen del paquete, y es la que se visualiza al ejecutar `help("nombre_del_paquete")`, para ello, se debe usar el comando `usethis::use_package_doc()`, lo que genera un archivo **R/nombre_del_paquete-package.R**, el cual, puede ser editado/usado para actualizar las funciones que se importan de otros paquetes. Luego, se debe ejecutar `devtools::document()`, lo que permite tomar parte de la información de archivo **DESCRIPTION** para generar una viñeta del paquete (el logo se incrusta automáticamente si ya está creado de antemano, sino, al ejecutar `devtools::document()` se añadirá).
+
+# Funcionamiento
+
+Para probar las funciones sin instalar el paquete se debe utilizar la función `devtools::load_all()`.
+La función `devtools::check()` verifica todos los procesos. Otra forma de realizar los mismo, es presionar en la opción **check** de la pestaña **Build**.
+
+Este proceso indicará todo tipo de errores que se deben corregir para que la construcción sea óptima. Se recomienda ejecutar el comando `devtools::check()` cada vez que se realicen cambios, para mantener un control constante del código.
+
+Para instalar su paquete en el equipo local, utilice la función `devtools::install()` o bien en la pestaña de **Build** presiona la opción **Install**.
+
+# Pruebas
+
+El comando `usethis::use_testthat()` genera las funciones de prueba para verificar el funcionamiento del paquete, creando la carpeta **test/testthat/archivo_a_modificar**. El resto de archivos creados no se deben modificar. 
+
+Las funciones se deben editar manualmente. Para entender el funcionamiento de las pruebas consulte la [documentación](https://r-pkgs.org/testing-basics.html).
+
+# Logo
+
+Para crear un logo del paquete se debe utilizar el paquete *hexsticker*, el cual se puede complementar con los paquetes *magick* (para gráficos) y *sysfonts* (para fuentes)
+
+El logo combiene guardarlo en la carpeta **data-raw/**. Luego, para incrustar el logo en el paquete se debe utilizar el comando `usethis::use_logo("ruta_donde_está_guardado_el_logo")`. Este comando colocará el logo en la carpeta **man/figures/** y proporcionará un fragmento de código para incrustar el logo en archivo README (debe pegar este código en archivo README).
+
+
+# Problemas/Soluciones
+
+## Ubuntu (22.04.3 LTS +)
+
+- Caracteres ASCII: es posible recibir la nota de que algunas de las bases de datos (de la carpeta data) no tienen únicamente caracteres ASCII, lo cual, viene acompañado de un mensaje en el que se indica que el paquete **qpdf** es necesario para reducir el tamaño de los PDF. Para solucionar este problema ejecute `sudo apt install qpdf`.

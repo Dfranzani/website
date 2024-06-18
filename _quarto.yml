@@ -1,0 +1,42 @@
+project:
+  type: website
+  output-dir: docs
+  render: 
+    - principal/home.qmd
+    - principal/about.qmd
+    - principal/blog.qmd
+    - principal/posts/
+    
+website:
+  title: "Daniel Franzani"
+  search: 
+   location: navbar
+   type: overlay
+  site-url: /principal/home.html
+  navbar:
+    left:
+      - href: principal/home.qmd
+        text: Home
+      - href: principal/about.qmd
+        text: About
+      - href: principal/blog.qmd
+        text: Blog
+    right:
+      - icon: github
+        href: https://github.com/Dfranzani
+        aria-label: GitHub
+  comments: 
+    utterances:
+      repo: Dfranzani/website
+
+format:
+  html:
+    theme: sandstone
+    css: styles.css
+    toc: true
+    mainfont: Ubuntu, system-ui, "Lucida Console", monospace
+execute: 
+  freeze: auto
+  cache: refresh
+
+editor: source

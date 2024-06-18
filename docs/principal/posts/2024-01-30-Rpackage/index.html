@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Daniel Franzani - Elaborar paquetes en R utilizando el paquete devtools</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Daniel Franzani</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../principal/home.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../principal/about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../principal/blog.html"> 
+<span class="menu-text">Blog</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/Dfranzani"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#estructura-inicial" id="toc-estructura-inicial" class="nav-link active" data-scroll-target="#estructura-inicial"><span class="header-section-number">1</span> Estructura inicial</a></li>
+  <li><a href="#añadir-bases-de-datos" id="toc-añadir-bases-de-datos" class="nav-link" data-scroll-target="#añadir-bases-de-datos"><span class="header-section-number">2</span> Añadir bases de datos</a></li>
+  <li><a href="#documentación" id="toc-documentación" class="nav-link" data-scroll-target="#documentación"><span class="header-section-number">3</span> Documentación</a>
+  <ul class="collapse">
+  <li><a href="#funciones" id="toc-funciones" class="nav-link" data-scroll-target="#funciones"><span class="header-section-number">3.1</span> Funciones</a></li>
+  <li><a href="#renombrar-funciones" id="toc-renombrar-funciones" class="nav-link" data-scroll-target="#renombrar-funciones"><span class="header-section-number">3.2</span> Renombrar funciones</a></li>
+  <li><a href="#bases-de-datos" id="toc-bases-de-datos" class="nav-link" data-scroll-target="#bases-de-datos"><span class="header-section-number">3.3</span> Bases de datos</a></li>
+  <li><a href="#viñetas-opcionales" id="toc-viñetas-opcionales" class="nav-link" data-scroll-target="#viñetas-opcionales"><span class="header-section-number">3.4</span> Viñetas opcionales</a></li>
+  </ul></li>
+  <li><a href="#funcionamiento" id="toc-funcionamiento" class="nav-link" data-scroll-target="#funcionamiento"><span class="header-section-number">4</span> Funcionamiento</a></li>
+  <li><a href="#pruebas" id="toc-pruebas" class="nav-link" data-scroll-target="#pruebas"><span class="header-section-number">5</span> Pruebas</a></li>
+  <li><a href="#logo" id="toc-logo" class="nav-link" data-scroll-target="#logo"><span class="header-section-number">6</span> Logo</a></li>
+  <li><a href="#problemassoluciones" id="toc-problemassoluciones" class="nav-link" data-scroll-target="#problemassoluciones"><span class="header-section-number">7</span> Problemas/Soluciones</a>
+  <ul class="collapse">
+  <li><a href="#ubuntu-22.04.3-lts" id="toc-ubuntu-22.04.3-lts" class="nav-link" data-scroll-target="#ubuntu-22.04.3-lts"><span class="header-section-number">7.1</span> Ubuntu (22.04.3 LTS +)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Elaborar paquetes en R utilizando el paquete <em>devtools</em></h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">devtools</div>
+    <div class="quarto-category">usethis</div>
+    <div class="quarto-category">roxygen</div>
+    <div class="quarto-category">sinew</div>
+  </div>
+  </div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">15 de junio de 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>A continuación, se mencionan los principales aspectos que personalmente considero necesarios para la elaboración de un paquete con R, los cuales, están tomados del libro <a href="https://r-pkgs.org/whole-game.html">Paquetes R (2e)</a> escrito por Hadley Wickham y Jennifer Bryan. En particular, se presenta un resumen del primer capítulo “The Whole Game” (se recomienda replicar el ejemplo desarrollado en este capítulo) y algunas otras secciones.</p>
+<p>La creación de paquetes en R está asistida por diversos paquetes que facilitan el desarrollo, entre los cuales usaremos <em>devtools</em>, <em>usethis</em>, <em>roxygen2</em> y <em>sinew</em>. Además, se recomienda trabajar con R Studio, ya que, varios de los comandos se ejecutan desde la barra de herramientas.</p>
+<section id="estructura-inicial" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Estructura inicial</h1>
+<ol type="1">
+<li><p>Para crear un paquete, lo primero es crear un proyecto. Seleccione File -&gt; New Project -&gt; New Directory -&gt; R Package using devtools, o utilice el comando <code>create.package("~/dir/nombre_del_paquete")</code>. Esto creará un proyecto con los archivos:</p>
+<ul>
+<li><strong>.Rbuildignore</strong>: archivos que no se deben incluir en la creación del paquete. No necesita manipular este archivo.</li>
+<li><strong>.gitignore</strong>: control de archivos en Git. No necesita manipular este archivo (por el momento).</li>
+<li><strong>DESCRIPTION</strong>: Contiene los metadatos del paquete (información del paquete). Puede editar el archivo para modificar los antecedentes (para saber que información se puede introducir manualmente, consulte la <a href="https://r-pkgs.org/description.html">documentación</a>), sin embargo, otro tipo de información será añadida/modificada directamente mediante otros comandos que se mencionan más adelante.</li>
+<li><strong>NAMESPACE</strong>: contiene los nombres de las funciones que el paquete utiliza y exporta (las que se crean). No se necesita manipular este archivo, ya que hay comando que se encargan de la modificación de este.</li>
+<li><strong>.Rproj</strong>: archivo del directorio de trabajo. No necesita manipular este archivo.</li>
+</ul>
+<p>y la carpeta <strong>R</strong>, la cual, contiene todos los archivos <strong>.R</strong> con las funciones que se desee crear.</p></li>
+<li><p>Los archivos .R pueden ser creados manualmente desde la barra de herramientas, aunque también es posible utilizar el comando <code>usethis::use_r("nombre_del_archivo")</code>.</p></li>
+<li><p>Para incorporar un licencia de uso a su paquete (en caso de que lo crea relevante) utilice el comando <code>usethis::use_mit_license()</code>. Hay otros tipos de licencias que son proporcionadas por este paquete (consulte <a href="https://usethis.r-lib.org/reference/licenses.html">aquí</a>).</p></li>
+<li><p>Para crear un archivo “Leáme” utilice el comando <code>usethis::use_readme_md()</code>, lo cual, creará una archivo <strong>README.md</strong>. Este archivo se utiliza para hacer una presentación del paquete.</p></li>
+<li><p>Para crear un archivo de las actualizaciones del paquete utilice el comando <code>usethis::use_news_ms()</code>, lo cual, creará una archivo <strong>NEWS.md</strong>. Este archivo se utiliza para informar de las actualizaciones que va teniendo el paquete; normalmente, cada actualización importante se identifica como una nueva versión del paquete.</p></li>
+</ol>
+</section>
+<section id="añadir-bases-de-datos" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Añadir bases de datos</h1>
+<p>Para almacenar bases de datos que se utilizan el paquete, ya sea para uso de ejemplos o para los ejercicios que el usuario estime conveniente, lo primero es cargar la base de datos y utilizar el comando <code>usethis::use_data("nombre_base_de_datos en R")</code>, esto creará la carpeta <strong>data/</strong> y guardará la base de datos con formato <strong>.rda</strong> (este proceso automáticamente crea la opción <code>LazyData: true</code> en el archivo <strong>DESCRIPTION</strong>).</p>
+<p>Por otro lado, si se desea guardar base de datos o cualquier otro elemento que no se desea añadir al paquete, se puede utilizar el comando <code>usethis::use_data_raw()</code>, lo cual, creará la carpeta <strong>data-raw/</strong>, que si bien es para guardar datos que no se añade al paquete, podemos usarla también para añadir archivos con código.</p>
+</section>
+<section id="documentación" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Documentación</h1>
+<section id="funciones" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="funciones"><span class="header-section-number">3.1</span> Funciones</h2>
+<p>Para añadir documentación de las funciones se utiliza el paquete <em>roxygen2</em>. Debe ubicarse dentro de la función, luego se utiliza la opción “Insert Roxygen Skeleton” desplegada al presionar en la varita que está en la barra de herramientas del archivo de código. Luego, ejecutando el comando <code>devtools::document()</code> se genera la documentación en formato <strong>.Rd</strong> en la carpeta <strong>man/</strong>. Esta carpeta se creará en caso de que no exista previamente.</p>
+<p>Un ejemplo de la documentación generada en una función es la siguiente.</p>
+<pre><code>#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
+ejemplo = function(){
+  print("Hola mundo")
+}</code></pre>
+<p>Los argumentos que se generan no son los únicos que se pueden utilizar, para saber que ingresar en cada uno de ellos y, cuales otros se pueden implementar, <a href="https://cran.r-project.org/web/packages/roxygen2/index.html">consulte la documentación</a>.</p>
+<p>En particular, uno de los argumentos más importantes es <code>#' @importFrom</code>, este argumento requiere que se ingresen las funciones utilizadas de paquetes (no todas las funciones necesariamente deben ingresarse) actualizando el archivo <strong>NAMESPACE</strong>, incluso, si olvidas rellenar este apartado, al momento de ejecutar la revisión con la opción <strong>check</strong> de la pestaña <strong>Build</strong> (mirar sección de Funcionamiento), te indicará la funciones que faltan por importar.</p>
+<pre><code>#' Title
+#'
+#' @param x
+#' @param y
+#'
+#' @return
+#' @export
+#'
+#' @importFrom graphics points
+ejemplo = function(x,y){
+  plot(x,y)
+  points(y,x)
+}</code></pre>
+<p>Existe una segunda forma de hacerlo, y es usando el comando <code>usethis::use_import_from("nombre_del_paquete", "función")</code>, esto actualizará tanto el <strong>NAMESPACE</strong> como el archivo <strong>R/nombre_del_paquete-package.R</strong> (detalle de este archivo en la sección de Viñetas), el cual, contiene también las funciones importada.</p>
+<p>Ambos métodos son factibles para importar las funciones; si se desea, se pueden usar ambos sin preocuparse por la existencia de conflictos.</p>
+</section>
+<section id="renombrar-funciones" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="renombrar-funciones"><span class="header-section-number">3.2</span> Renombrar funciones</h2>
+<p>Si se desea cambiar el nombre de una función podemos realizarlo con el comando <code>usethis::rename_files("nombre_antiguo", "nombre_nuevo")</code>, esto cambiará el nombre del archivo <em>test</em> asociado a la función. Luego, es necesario que se ejecute nuevamente el comando <code>document()</code> para actualizar la viñeta de documentación y el <strong>NAMESPACE</strong>.</p>
+</section>
+<section id="bases-de-datos" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="bases-de-datos"><span class="header-section-number">3.3</span> Bases de datos</h2>
+<p>Es necesario documentar las bases de datos que se encuentran en la carpeta <strong>data/</strong>, para ello se recomienda crear el archivo <strong>R/data.R</strong>. Luego, mediante el paquete y comando <code>sinew::makeOxygen("nombre_base_de_datos", add_fields = "source")</code> se imprime en consola el esqueleto de la documentación de la base de datos en formato <strong>roxygen2</strong>. En necesario que la base de datos se encuentre previamente cargada en el ambiente.</p>
+<p>No olvide ejecutar el comando <code>devtools::document()</code> para crear la viñeta correspondiente.</p>
+</section>
+<section id="viñetas-opcionales" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="viñetas-opcionales"><span class="header-section-number">3.4</span> Viñetas opcionales</h2>
+<p>Las viñetas son pestañas extras que tienen los paquetes que sirven en caso de que la documentación sea extensa, o si se desea explicar algo en profundidad. Este tipo de archivo no es imprescindible en el paquete.</p>
+<p>Para crear una viñeta se debe utilizar el comando&nbsp;<code>usethis::use_vignette("nombre_de_la_viñeta_a_crear)</code>. Automáticamente, se crea la carpeta de viñetas <strong>vignettes</strong>. Para poder observar estas viñetas, lo primero es instalar el paquete, y luego construir las viñetas mediante el comando&nbsp;<code>devtools::install(build_vignettes = TRUE)</code>. Sin embargo, para poder instalar las viñetas desde github al momento de instalar el paquete, se deberá ejecutar&nbsp;<code>devtools::install_github("ruta_github", build_vignettes = TRUE)</code>.</p>
+<p>Una viñeta especial y que es totalmente opcional es la de resumen del paquete, y es la que se visualiza al ejecutar <code>help("nombre_del_paquete")</code>, para ello, se debe usar el comando&nbsp;<code>usethis::use_package_doc()</code>, lo que genera un archivo&nbsp;<strong>R/nombre_del_paquete-package.R</strong>, el cual, puede ser editado/usado para actualizar las funciones que se importan de otros paquetes. Luego, se debe ejecutar&nbsp;<code>devtools::document()</code>, lo que permite tomar parte de la información de archivo <strong>DESCRIPTION</strong> para generar una viñeta del paquete (el logo se incrusta automáticamente si ya está creado de antemano, sino, al ejecutar&nbsp;<code>devtools::document()</code>&nbsp;se añadirá).</p>
+</section>
+</section>
+<section id="funcionamiento" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Funcionamiento</h1>
+<p>Para probar las funciones sin instalar el paquete se debe utilizar la función <code>devtools::load_all()</code>. La función <code>devtools::check()</code> verifica todos los procesos. Otra forma de realizar los mismo, es presionar en la opción <strong>check</strong> de la pestaña <strong>Build</strong>.</p>
+<p>Este proceso indicará todo tipo de errores que se deben corregir para que la construcción sea óptima. Se recomienda ejecutar el comando <code>devtools::check()</code> cada vez que se realicen cambios, para mantener un control constante del código.</p>
+<p>Para instalar su paquete en el equipo local, utilice la función <code>devtools::install()</code> o bien en la pestaña de <strong>Build</strong> presiona la opción <strong>Install</strong>.</p>
+</section>
+<section id="pruebas" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Pruebas</h1>
+<p>El comando <code>usethis::use_testthat()</code> genera las funciones de prueba para verificar el funcionamiento del paquete, creando la carpeta <strong>test/testthat/archivo_a_modificar</strong>. El resto de archivos creados no se deben modificar.</p>
+<p>Las funciones se deben editar manualmente. Para entender el funcionamiento de las pruebas consulte la <a href="https://r-pkgs.org/testing-basics.html">documentación</a>.</p>
+</section>
+<section id="logo" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Logo</h1>
+<p>Para crear un logo del paquete se debe utilizar el paquete <em>hexsticker</em>, el cual se puede complementar con los paquetes <em>magick</em> (para gráficos) y <em>sysfonts</em> (para fuentes)</p>
+<p>El logo combiene guardarlo en la carpeta <strong>data-raw/</strong>. Luego, para incrustar el logo en el paquete se debe utilizar el comando <code>usethis::use_logo("ruta_donde_está_guardado_el_logo")</code>. Este comando colocará el logo en la carpeta <strong>man/figures/</strong> y proporcionará un fragmento de código para incrustar el logo en archivo README (debe pegar este código en archivo README).</p>
+</section>
+<section id="problemassoluciones" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Problemas/Soluciones</h1>
+<section id="ubuntu-22.04.3-lts" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="ubuntu-22.04.3-lts"><span class="header-section-number">7.1</span> Ubuntu (22.04.3 LTS +)</h2>
+<ul>
+<li>Caracteres ASCII: es posible recibir la nota de que algunas de las bases de datos (de la carpeta data) no tienen únicamente caracteres ASCII, lo cual, viene acompañado de un mensaje en el que se indica que el paquete <strong>qpdf</strong> es necesario para reducir el tamaño de los PDF. Para solucionar este problema ejecute <code>sudo apt install qpdf</code>.</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("\/principal\/home\.html");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="Dfranzani/website" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
