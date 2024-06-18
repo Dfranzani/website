@@ -34,7 +34,7 @@ format:
     theme: sandstone
     css: styles.css
     toc: true
-    mainfont: Ubuntu, system-ui, "Lucida Console", monospace
+    mainfont: system-ui
 execute: 
   freeze: auto
   cache: refresh
