@@ -14,7 +14,7 @@ about:
     href: https://www.linkedin.com/in/dfranzani/
   - icon: bi-file-earmark-pdf
     text: CV
-    href: https://github.com/Dfranzani/CV/blob/main/CV.pdf
+    href: https://github.com/Dfranzani/CV/blob/main/Resume.pdf
 toc: false
 lang: es
 grid:

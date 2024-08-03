@@ -67,7 +67,7 @@
     "href": "principal/posts/2024-01-30-Rpackage/index.html",
     "title": "Elaborar paquetes en R utilizando el paquete devtools",
     "section": "",
-    "text": "A continuación, se mencionan los principales aspectos que personalmente considero necesarios para la elaboración de un paquete con R, los cuales, están tomados del libro Paquetes R (2e) escrito por Hadley Wickham y Jennifer Bryan. En particular, se presenta un resumen del primer capítulo “The Whole Game” (se recomienda replicar el ejemplo desarrollado en este capítulo) y algunas otras secciones.\nLa creación de paquetes en R está asistida por diversos paquetes que facilitan el desarrollo, entre los cuales usaremos devtools, usethis, roxygen2 y sinew."
+    "text": "A continuación, se mencionan los principales aspectos que personalmente considero necesarios para la elaboración de un paquete con R, los cuales, están tomados del libro Paquetes R (2e) escrito por Hadley Wickham y Jennifer Bryan. En particular, se presenta un resumen del primer capítulo “The Whole Game” (se recomienda replicar el ejemplo desarrollado en este capítulo) y algunas otras secciones.\nLa creación de paquetes en R está asistida por diversos paquetes que facilitan el desarrollo, entre los cuales usaremos devtools, usethis, roxygen2 y sinew. Además, se recomienda trabajar con R Studio, ya que, varios de los comandos se ejecutan desde la barra de herramientas."
   },
   {
     "objectID": "principal/posts/2024-01-30-Rpackage/index.html#funciones",

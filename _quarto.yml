@@ -34,8 +34,6 @@ format:
     theme: sandstone
     css: styles.css
     toc: true
-    mainfont: Ubuntu
-
 execute: 
   freeze: auto
   cache: refresh
