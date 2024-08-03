@@ -13,7 +13,7 @@ about:
     text: "Linkedin"
     href: https://www.linkedin.com/in/dfranzani/
   - icon: bi-file-earmark-pdf
-    text: CV
+    text: Resume
     href: https://github.com/Dfranzani/CV/blob/main/Resume.pdf
 toc: false
 lang: es
