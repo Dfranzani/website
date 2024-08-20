@@ -77,7 +77,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
       
       searchColumns: ["listing-date","listing-title","listing-author"],
     };
@@ -179,7 +179,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    </div>
+    <h5 class="quarto-listing-category-title">Categorías</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">Todas <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Búsqueda">Búsqueda <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Heurística">Heurística <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R">R <span class="quarto-category-count">(1)</span></div><div class="category" data-category="devtools">devtools <span class="quarto-category-count">(1)</span></div><div class="category" data-category="roxygen">roxygen <span class="quarto-category-count">(1)</span></div><div class="category" data-category="sinew">sinew <span class="quarto-category-count">(1)</span></div><div class="category" data-category="usethis">usethis <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -207,7 +207,7 @@ window.Quarto = {
 
 
 <div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<table class="quarto-listing-table table table-striped">
+<table class="quarto-listing-table table table-hover">
 <thead>
 <tr>
 <th>
@@ -216,23 +216,34 @@ Fecha
 <th>
 Título
 </th>
+<th>
+Tiempo de lectura
+</th>
 </tr>
 </thead>
 <tbody class="list">
-<tr data-index="0" data-categories="devtools,usethis,roxygen,sinew" data-listing-date-sort="1718424000000" data-listing-file-modified-sort="1718735684829" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1392" data-listing-title-sort="Elaborar paquetes en R utilizando el paquete *devtools*" data-listing-filename-sort="index.qmd">
+<tr data-index="0" data-categories="devtools,usethis,roxygen,sinew" data-listing-date-sort="1718424000000" data-listing-file-modified-sort="1718735684829" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1392" data-listing-title-sort="Elaborar paquetes en R utilizando el paquete *devtools*" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+ if (href) { window.location=href ; return false; }">
 <td>
-<span class="listing-date">15/6/24</span>
+<span class="listing-date">15 jun 2024</span>
 </td>
 <td>
 <a href="../principal/posts/2024-01-30-Rpackage/index.html" class="title listing-title">Elaborar paquetes en R utilizando el paquete <em>devtools</em></a>
 </td>
-</tr>
-<tr data-index="1" data-categories="R,Heurística,Búsqueda" data-listing-date-sort="1632020400000" data-listing-file-modified-sort="1706382884000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3962" data-listing-title-sort="Problema de las n - reinas" data-listing-filename-sort="index.qmd">
 <td>
-<span class="listing-date">19/9/21</span>
+<span class="listing-reading-time">7 minutos</span>
+</td>
+</tr>
+<tr data-index="1" data-categories="R,Heurística,Búsqueda" data-listing-date-sort="1632020400000" data-listing-file-modified-sort="1706382884000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3962" data-listing-title-sort="Problema de las n - reinas" data-listing-filename-sort="index.qmd" onclick="href = this.querySelector('a').getAttribute('href');
+ if (href) { window.location=href ; return false; }">
+<td>
+<span class="listing-date">19 sept 2021</span>
 </td>
 <td>
 <a href="../principal/posts/2021-09-19-problema+de+las+n+reinas/index.html" class="title listing-title">Problema de las n - reinas</a>
+</td>
+<td>
+<span class="listing-reading-time">20 minutos</span>
 </td>
 </tr>
 </tbody>

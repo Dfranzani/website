@@ -4,17 +4,13 @@ listing:
   contents: posts
   sort: "date desc"
   type: table
-  table-striped: true
-  fields: [date, title]
-  categories: false
+  table-striped: false
+  table-hover: true
+  fields: [date, title, reading-time]
+  categories: true
   filter-ui: false
   sort-ui: false
-  date-format: short
+  date-format: medium
 comments: false
 lang: es
-grid:
-  sidebar-width: 0px
-  body-width: 750px
-  margin-width: 0px
-  gutter-width: 0px
 ---
