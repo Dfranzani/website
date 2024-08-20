@@ -12,5 +12,9 @@ listing:
   date-format: short
 comments: false
 lang: es
-page-layout: full
+grid:
+  sidebar-width: 0px
+  body-width: 750px
+  margin-width: 0px
+  gutter-width: 0px
 ---
